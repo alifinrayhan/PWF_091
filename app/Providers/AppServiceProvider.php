@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\User; // Tambahkan ini
-use Illuminate\Support\Facades\Gate; // Tambahkan ini
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,9 +21,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Gate untuk mengecek apakah user adalah admin
+        // Gate untuk ekspor produk yang sudah kamu buat
         Gate::define('export-product', function (User $user) {
             return $user->role === 'admin';
+        });
+
+        // TAMBAHKAN INI: Gate khusus untuk akses menu Category sesuai soal UCP 1
+        Gate::define('manage-category', function (User $user) {
+            return $user->role === 'admin'; // Hanya admin yang boleh [cite: 84]
         });
     }
 }
